@@ -45,7 +45,7 @@
 
 ```bash
 # 克隆项目
-git clone <repository-url>
+git clone https://github.com/javpower/llm-finetune-framework.git
 cd llm-finetune-framework
 
 # 创建环境
