@@ -1,0 +1,127 @@
+# ============================================
+# LLM微调框架 - 基础配置文件
+# ============================================
+
+# 项目基础配置
+project:
+  name: "llm-finetune-framework"
+  version: "1.0.0"
+  description: "企业级大语言模型微调框架"
+  author: "AI Team"
+  
+# 环境配置
+environment:
+  python_version: "3.10"
+  cuda_version: "12.1"
+  
+# 路径配置
+paths:
+  data_dir: "./data"
+  output_dir: "./outputs"
+  checkpoint_dir: "./outputs/checkpoints"
+  merged_dir: "./outputs/merged"
+  log_dir: "./outputs/logs"
+  cache_dir: "~/.cache/huggingface"
+
+# 模型配置
+model:
+  # 支持的模型列表
+  supported_models:
+    qwen2_5_7b:
+      name: "Qwen/Qwen2.5-7B-Instruct"
+      type: "qwen2_5-7b-instruct"
+      template: "qwen"
+      context_length: 32768
+    qwen2_5_14b:
+      name: "Qwen/Qwen2.5-14B-Instruct"
+      type: "qwen2_5-14b-instruct"
+      template: "qwen"
+      context_length: 32768
+    llama3_8b:
+      name: "meta-llama/Meta-Llama-3-8B-Instruct"
+      type: "llama3-8b-instruct"
+      template: "llama3"
+      context_length: 8192
+    
+  # 默认模型
+  default_model: "qwen2_5_7b"
+
+# 训练配置
+training:
+  # 训练类型: lora, qlora, full
+  type: "lora"
+  
+  # LoRA配置
+  lora:
+    rank: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: "ALL"
+    
+  # QLoRA配置
+  qlora:
+    quantization_bit: 4
+    double_quant: true
+    quant_type: "nf4"
+    
+  # 训练参数
+  epochs: 5
+  batch_size: 1
+  gradient_accumulation_steps: 8
+  learning_rate: 2.0e-4
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  max_grad_norm: 0.5
+  max_length: 1024
+  
+  # 优化器
+  optimizer: "adamw_torch"
+  lr_scheduler: "cosine"
+  
+  # 显存优化
+  gradient_checkpointing: true
+  flash_attention: false
+  
+  # 保存策略
+  save_steps: 50
+  eval_steps: 50
+  logging_steps: 10
+  save_total_limit: 3
+  load_best_model_at_end: true
+
+# 数据配置
+data:
+  # 支持的数据格式: alpaca, sharegpt, openai
+  format: "alpaca"
+  
+  # 数据分割
+  train_ratio: 0.9
+  val_ratio: 0.1
+  test_ratio: 0.0
+  
+  # 预处理
+  preprocessing_num_workers: 16
+  overwrite_cache: true
+  
+# 推理配置
+inference:
+  max_new_tokens: 512
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+  repetition_penalty: 1.1
+  do_sample: true
+
+# API配置
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1
+  
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_rotation: true
+  max_bytes: 10485760  # 10MB
+  backup_count: 5

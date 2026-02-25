@@ -1,0 +1,50 @@
+# ============================================
+# LLM微调框架 - 依赖列表
+# ============================================
+
+# 核心依赖
+torch>=2.0.0
+transformers>=4.40.0
+accelerate>=0.30.0
+peft>=0.11.0
+datasets>=2.19.0
+
+# 训练框架（按需安装）
+# ms-swift[all]  # MS-Swift
+# llama-factory  # LLaMA-Factory
+
+# 量化
+bitsandbytes>=0.43.0
+optimum>=1.19.0
+auto-gptq>=0.7.0
+
+# API服务
+fastapi>=0.111.0
+uvicorn>=0.30.0
+pydantic>=2.7.0
+
+# 推理加速
+# vllm>=0.4.0  # 可选，用于高性能推理
+
+# 数据处理
+numpy>=1.24.0
+pandas>=2.0.0
+
+# 工具和日志
+tqdm>=4.66.0
+pyyaml>=6.0.0
+python-dotenv>=1.0.0
+
+# 监控和可视化
+# wandb>=0.17.0  # 可选，用于实验跟踪
+# tensorboard>=2.16.0  # 可选，用于训练可视化
+
+# 测试
+pytest>=8.2.0
+pytest-asyncio>=0.23.0
+httpx>=0.27.0
+
+# 代码质量
+black>=24.4.0
+flake8>=7.0.0
+mypy>=1.10.0

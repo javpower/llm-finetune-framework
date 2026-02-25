@@ -1,0 +1,61 @@
+# ============================================
+# MS-Swift 配置 - Qwen2.5 LoRA微调
+# ============================================
+
+# 模型配置
+model_type: "qwen2_5-7b-instruct"
+model_id_or_path: "Qwen/Qwen2.5-7B-Instruct"
+
+# 微调类型
+template_type: "qwen"
+sft_type: "lora"
+tuner_backend: "peft"
+
+# 数据类型
+dtype: "fp16"
+
+# 输出目录
+output_dir: "./outputs/checkpoints/swift_qwen_lora"
+
+# 数据配置
+dataset: "./data/processed/train.jsonl"
+val_dataset: "./data/processed/val.jsonl"
+max_length: 1024
+check_dataset_strategy: "warning"
+
+# LoRA配置
+lora_rank: 16
+lora_alpha: 32
+lora_dropout_p: 0.05
+lora_target_modules: "ALL"
+
+# 训练配置
+num_train_epochs: 5
+batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-4
+weight_decay: 0.01
+warmup_ratio: 0.03
+max_grad_norm: 0.5
+
+# 优化器
+optimizer: "adamw_torch"
+lr_scheduler_type: "cosine"
+
+# 显存优化
+gradient_checkpointing: true
+use_flash_attn: false
+
+# 量化配置（QLoRA）
+quantization_bit: 4
+device_max_memory: "16GB"
+
+# 保存策略
+eval_steps: 50
+save_steps: 50
+save_total_limit: 3
+logging_steps: 10
+
+# 其他
+seed: 42
+ddp_backend: "nccl"

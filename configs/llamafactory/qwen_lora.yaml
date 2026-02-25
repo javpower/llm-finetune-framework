@@ -1,0 +1,54 @@
+# ============================================
+# LLaMA-Factory 配置 - Qwen2.5 LoRA微调
+# ============================================
+
+# 模型设置
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+template: qwen
+
+# 数据设置
+dataset: customer_service
+cutoff_len: 1024
+max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+# 输出设置
+output_dir: outputs/checkpoints/llamafactory_qwen_lora
+logging_steps: 10
+save_steps: 50
+plot_loss: true
+overwrite_output_dir: true
+
+# 训练设置
+do_train: true
+stage: sft
+finetuning_type: lora
+lora_target: all
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+
+# 量化（16G显存必须）
+quantization_bit: 4
+
+# 优化器设置
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-4
+num_train_epochs: 5.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+bf16: false
+fp16: true
+
+# 显存优化
+flash_attn: disabled
+gradient_checkpointing: true
+
+# 评估
+val_size: 0.1
+per_device_eval_batch_size: 1
+evaluation_strategy: steps
+eval_steps: 50
+load_best_model_at_end: true
